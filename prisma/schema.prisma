@@ -1,15 +1,55 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+/**
+ * 
+ *  Part 2 - Basic TeamProject
+ * 
+ *  2025. 10. 16.
+ * 
+ *  studysoop
+ * 
+ *  schema.prisma
+ * 
+ */
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
 }
+
+model Study {
+  id           String      @id @default(uuid())
+  nickname     String
+  title        String
+  description  String?
+  password     String
+  background   Json        @default("{ \"type\" : \"bg\", \"value\": \"var(--card--green)\"}")
+  points       Int         @default(0)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt  
+  habits       Habit[]
+  reactions    Reaction[]
+}
+
+model Habit {
+  id           String     @id @default(uuid())
+  studyId      String
+  name         String
+  week         Boolean[]  @default([false,false,false,false,false,false,false])
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  study        Study      @relation(fields: [studyId], references: [id])
+}
+
+model Reaction {
+  id           String     @id @default(uuid())
+  studyId      String
+  emoji        String
+  count        Int
+  study        Study      @relation(fields: [studyId], references: [id])
+}
+
+
