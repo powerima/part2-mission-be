@@ -18,6 +18,18 @@ async function main() {
     'IMAGE_4',
   ];
 
+  const STUDYS = [
+    {
+      nickname: 'study_nickname_01',
+      title: 'study_title_01',
+      description: 'study_description_01_abcd',
+      password: 'abc123',
+      updatedAt: '2025-10-18T09:10:00.000Z',
+    },
+  ];
+
+  const REACTIONS = [{}];
+
   // Study 생성
   const NUM_STUDY_TO_CREATE = 9; // Study 생성 개수
   const studyPromises = Array.from({ length: NUM_STUDY_TO_CREATE }).map(() =>
@@ -30,6 +42,12 @@ async function main() {
         password: faker.internet.password(8),
         points: faker.number.int({ min: 0, max: 500 }),
       },
+    }),
+  );
+
+  const studyPromises2 = Array.from({ length: 1 }).map(() =>
+    prisma.study.create({
+      data: STUDYS[0],
     }),
   );
 

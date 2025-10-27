@@ -8,17 +8,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum BackgroundType {
-  COLOR_GREEN
-  COLOR_ORANGE
-  COLOR_BLUE
-  COLOR_PINK
-  IMAGE_1
-  IMAGE_2
-  IMAGE_3
-  IMAGE_4
-}
-
 model Study {
   id          String         @id @default(uuid())
   nickname    String
@@ -29,20 +18,17 @@ model Study {
   points      Int            @default(0)
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
-
-  habits    Habit[]
-  reactions Reaction[]
+  habits      Habit[]
+  reactions   Reaction[]
 }
 
 model Habit {
-  id        String   @id @default(uuid())
-  studyId   String
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  study Study @relation(fields: [studyId], references: [id], onDelete: Cascade)
-
+  id          String        @id @default(uuid())
+  studyId     String
+  name        String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  study       Study         @relation(fields: [studyId], references: [id], onDelete: Cascade)
   habitRecord HabitRecord[]
 }
 
@@ -50,8 +36,7 @@ model HabitRecord {
   id         String   @id @default(uuid())
   habitId    String
   recordDate DateTime @default(now())
-
-  habit Habit @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  habit      Habit    @relation(fields: [habitId], references: [id], onDelete: Cascade)
 
   @@unique([habitId, recordDate])
 }
@@ -61,6 +46,16 @@ model Reaction {
   studyId String
   emoji   String
   count   Int    @default(0)
+  study   Study  @relation(fields: [studyId], references: [id], onDelete: Cascade)
+}
 
-  study Study @relation(fields: [studyId], references: [id], onDelete: Cascade)
+enum BackgroundType {
+  COLOR_GREEN
+  COLOR_ORANGE
+  COLOR_BLUE
+  COLOR_PINK
+  IMAGE_1
+  IMAGE_2
+  IMAGE_3
+  IMAGE_4
 }
