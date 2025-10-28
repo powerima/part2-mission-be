@@ -7,8 +7,8 @@ import { habitRouter } from './habit.js';
 
 const router = express.Router();
 
-router.use('/study', studyRouter);
-router.use('/reaction', reactionRouter);
-router.use('/habit', habitRouter);
+router.use('/api/study', studyRouter);
+router.use('/api/reaction', reactionRouter);
+router.use('/api/habit', habitRouter);
 
 export { router as indexRouter };

@@ -18,18 +18,6 @@ async function main() {
     'IMAGE_4',
   ];
 
-  const STUDYS = [
-    {
-      nickname: 'study_nickname_01',
-      title: 'study_title_01',
-      description: 'study_description_01_abcd',
-      password: 'abc123',
-      updatedAt: '2025-10-18T09:10:00.000Z',
-    },
-  ];
-
-  const REACTIONS = [{}];
-
   // Study 생성
   const NUM_STUDY_TO_CREATE = 9; // Study 생성 개수
   const studyPromises = Array.from({ length: NUM_STUDY_TO_CREATE }).map(() =>
@@ -44,13 +32,6 @@ async function main() {
       },
     }),
   );
-
-  const studyPromises2 = Array.from({ length: 1 }).map(() =>
-    prisma.study.create({
-      data: STUDYS[0],
-    }),
-  );
-
   const studies = await Promise.all(studyPromises);
 
   // 각 study에 대한 Habit 생성

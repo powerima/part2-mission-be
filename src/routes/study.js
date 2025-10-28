@@ -17,7 +17,6 @@ studyRouter.post('/', async (req, res, next) => {
 /* 모든 study 리스트 조회 */
 studyRouter.get('/', async (req, res, next) => {
   try {
-    console.log('findAllStudyList() calll');
     const studyList = await studyRepository.findAllStudyList();
 
     res.status(200).json(studyList);
@@ -62,7 +61,12 @@ studyRouter.get('/:id/reaction/:reactionId', async (req, res, next) => {
 /* study 수정 */
 studyRouter.patch('/:id', async (req, res) => {
   try {
-    await studyRepository.updateStudy(req.params.id, req.body);
+    const updateStudy = await studyRepository.updateStudy(
+      req.params.id,
+      req.body,
+    );
+
+    res.status(200).json(updateStudy);
   } catch (error) {
     next(error);
   }
